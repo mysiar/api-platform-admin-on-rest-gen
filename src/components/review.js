@@ -1,14 +1,18 @@
 import React from 'react';
+import {CardActions} from 'material-ui/Card';
 import {
   List, Datagrid, Edit, Create, Show, SimpleShowLayout, SimpleForm,
   DateField, TextField,
-  DisabledInput, TextInput, DateInput,
-  EditButton,ShowButton, DeleteButton
+  TextInput, DateInput,
+  EditButton,ShowButton, DeleteButton, RefreshButton, ListButton, CreateButton
 } from 'admin-on-rest';
-import {configList, configEdit, configCreate, configShow} from '../../config/review';
+import {configList, configEdit, configCreate, configShow} from '../config/review';
 
 export const ReviewList = (props) => (
-  <List {...props}>
+  <List
+    actions={<ReviewListActions/>}
+    {...props}
+  >
     <Datagrid>
       {configList.id && <TextField source="id" />}
       {configList.rating && <TextField source="rating" />}
@@ -28,7 +32,11 @@ const ReviewTitle = ({record}) => {
 };
 
 export const ReviewEdit = (props) => (
-  <Edit title={<ReviewTitle />} {...props}>
+  <Edit
+    actions={<ReviewEditActions/>}
+    title={<ReviewTitle />}
+    {...props}
+  >
     <SimpleForm>
       {configEdit.id && <TextInput source="id" />}
       {configEdit.rating && <TextInput source="rating" />}
@@ -54,7 +62,11 @@ export const ReviewCreate = (props) => (
 );
 
 export const ReviewShow = (props) => (
-  <Show title={<ReviewTitle />} {...props}>
+  <Show
+    actions={<ReviewShowActions/>}
+    title={<ReviewTitle />}
+    {...props}
+  >
     <SimpleShowLayout>
       {configShow.id && <TextField source="id" />}
       {configShow.rating && <TextField source="rating" />}
@@ -64,4 +76,35 @@ export const ReviewShow = (props) => (
       {configShow.publicationDate && <TextField source="publicationDate" />}
     </SimpleShowLayout>
   </Show>
+);
+
+const cardActionStyle = {
+  zIndex: 2,
+  display: 'inline-block',
+  float: 'right',
+};
+
+const ReviewListActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configList.buttons.create && <CreateButton basePath={basePath} />}
+    {configList.buttons.refresh && <RefreshButton basePath={basePath} record={data} />}
+  </CardActions>
+);
+
+const ReviewShowActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configShow.buttons.edit && <EditButton basePath={basePath} record={data}/>}
+    {configShow.buttons.list && <ListButton basePath={basePath}/>}
+    {configShow.buttons.delete && <DeleteButton basePath={basePath} record={data}/>}
+    {configShow.buttons.refresh && <RefreshButton basePath={basePath} record={data}/>}
+  </CardActions>
+);
+
+const ReviewEditActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configShow.buttons.show && <ShowButton basePath={basePath} record={data}/>}
+    {configShow.buttons.list && <ListButton basePath={basePath}/>}
+    {configShow.buttons.delete && <DeleteButton basePath={basePath} record={data}/>}
+    {configShow.buttons.refresh && <RefreshButton basePath={basePath} record={data}/>}
+  </CardActions>
 );

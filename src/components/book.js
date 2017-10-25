@@ -1,20 +1,24 @@
 import React from 'react';
+import {CardActions} from 'material-ui/Card';
 import {
   List, Datagrid, Edit, Create, Show, SimpleShowLayout, SimpleForm,
   DateField, TextField,
-  DisabledInput, TextInput, DateInput,
-  EditButton,ShowButton, DeleteButton
+  TextInput, DateInput,
+  EditButton,ShowButton, DeleteButton, RefreshButton, ListButton, CreateButton
 } from 'admin-on-rest';
-import {configList, configEdit, configCreate, configShow} from '../../config/book';
+import {configList, configEdit, configCreate, configShow} from '../config/book';
 
 export const BookList = (props) => (
-  <List {...props}>
+  <List
+    actions={<BookListActions/>}
+    {...props}
+  >
     <Datagrid>
       {configList.id && <TextField source="id" />}
       {configList.isbn && <TextField source="isbn" />}
+      {configList.description && <TextField source="description" />}
       {configList.author && <TextField source="author" />}
       {configList.title && <TextField source="title" />}
-      {configList.description && <TextField source="description" />}
       {configList.publicationDate && <TextField source="publicationDate" />}
       {configList.buttons.show && <ShowButton />}
       {configList.buttons.edit && <EditButton />}
@@ -28,7 +32,11 @@ const BookTitle = ({record}) => {
 };
 
 export const BookEdit = (props) => (
-  <Edit title={<BookTitle />} {...props}>
+  <Edit
+    actions={<BookEditActions/>}
+    title={<BookTitle />}
+    {...props}
+  >
     <SimpleForm>
       {configEdit.id && <TextInput source="id" />}
       {configEdit.isbn && <TextInput source="isbn" />}
@@ -54,7 +62,11 @@ export const BookCreate = (props) => (
 );
 
 export const BookShow = (props) => (
-  <Show title={<BookTitle />} {...props}>
+  <Show
+    actions={<BookShowActions/>}
+    title={<BookTitle />}
+    {...props}
+  >
     <SimpleShowLayout>
       {configShow.id && <TextField source="id" />}
       {configShow.isbn && <TextField source="isbn" />}
@@ -64,4 +76,35 @@ export const BookShow = (props) => (
       {configShow.publicationDate && <TextField source="publicationDate" />}
     </SimpleShowLayout>
   </Show>
+);
+
+const cardActionStyle = {
+  zIndex: 2,
+  display: 'inline-block',
+  float: 'right',
+};
+
+const BookListActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configList.buttons.create && <CreateButton basePath={basePath} />}
+    {configList.buttons.refresh && <RefreshButton basePath={basePath} record={data} />}
+  </CardActions>
+);
+
+const BookShowActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configShow.buttons.edit && <EditButton basePath={basePath} record={data}/>}
+    {configShow.buttons.list && <ListButton basePath={basePath}/>}
+    {configShow.buttons.delete && <DeleteButton basePath={basePath} record={data}/>}
+    {configShow.buttons.refresh && <RefreshButton basePath={basePath} record={data}/>}
+  </CardActions>
+);
+
+const BookEditActions = ({basePath, data}) => (
+  <CardActions style={cardActionStyle}>
+    {configShow.buttons.show && <ShowButton basePath={basePath} record={data}/>}
+    {configShow.buttons.list && <ListButton basePath={basePath}/>}
+    {configShow.buttons.delete && <DeleteButton basePath={basePath} record={data}/>}
+    {configShow.buttons.refresh && <RefreshButton basePath={basePath} record={data}/>}
+  </CardActions>
 );

@@ -9,7 +9,8 @@ export const configList = {
   buttons: {
     show: true,
     edit: true,
-    delete: true
+    create: true,
+    refresh: true,
   }
 }
 
@@ -21,6 +22,12 @@ export const configEdit = {
   book: true,
   author: true,
   publicationDate: true,
+  buttons: {
+    show: true,
+    list: true,
+    delete: true,
+    refresh: true,
+  }
 }
 
 export const configCreate = {
@@ -31,6 +38,9 @@ export const configCreate = {
   book: true,
   author: true,
   publicationDate: true,
+  buttons: {
+    list: true,
+  }
 }
 
 export const configShow = {
@@ -41,4 +51,10 @@ export const configShow = {
   book: true,
   author: true,
   publicationDate: true,
+  buttons: {
+    edit: true,
+    list: true,
+    delete: true,
+    refresh: true,
+  }
 }
