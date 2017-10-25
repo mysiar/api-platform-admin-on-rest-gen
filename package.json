@@ -2,6 +2,14 @@
   "name": "api-platform-admin-on-rest-gen",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mysiar.github.io/api-platform-admin-on-rest-gen/",
+  "description": "Demo of api-platform/client-generator for admin-on-rest",
+  "license": "MIT",
+  "author": {
+    "name": "Piotr Synowiec",
+    "email": "psynowiec@gmail.com",
+    "url": ""
+  },
   "devDependencies": {
     "admin-on-rest": "^1.3",
     "gh-pages": "^1.0.0",
