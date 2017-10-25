@@ -12,7 +12,7 @@ import {stringify} from 'query-string';
 
 const {fetchJson} = fetchUtils;
 
-export default (API_URL, httpClient = fetchJson) => {
+export default (API_URL, authTokenName = null, authTokenValue = null, httpClient = fetchJson) => {
   /**
    * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
    * @param {String} resource Name of the resource to fetch, e.g. 'posts'
@@ -23,6 +23,11 @@ export default (API_URL, httpClient = fetchJson) => {
     let url = '';
     const options = {};
     options.headers = new Headers({'Accept': 'application/ld+json'});
+    if( authTokenName && authTokenValue) {
+      let authHeader = {};
+      authHeader[authTokenName] = authTokenValue;
+      options.headers = new Headers(authHeader);
+    }
     switch (type) {
       case GET_LIST: {
         const {page, perPage} = params.pagination;

@@ -9,7 +9,8 @@ const API_URL = (API_HOST + API_PATH).replace(/\/$/, '');
 
 const App = () => (
   <Admin
-    restClient={restClient(API_URL)}>
+    restClient={restClient(API_URL)}
+  >
     {resources}
   </Admin>
 );

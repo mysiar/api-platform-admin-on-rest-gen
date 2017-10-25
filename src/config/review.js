@@ -11,6 +11,7 @@ export const configList = {
     edit: true,
     create: true,
     refresh: true,
+    delete: true,
   }
 }
 
